@@ -1,0 +1,58 @@
+name: NodeJS with Webpack
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:To block Google app weblinks from accessing the app through the web in HTML, you can use the following code snippet:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Block Google App Weblinks</title>
+    <script>
+        window.onload = function() {
+            var links = document.getElementsByTagName('a');
+            for (var i = 0; i < links.length; i++) {
+                if (links[i].href.includes('play.google.com/store/apps')) {
+                    links[i].onclick = function(event) {
+                        event.preventDefault();
+                        alert('Access to Google app links is blocked.');
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.maps">Google Maps</a>
+    <a href="https://www.google.com/">Google Homepage</a>
+</body>
+</html>
+```
+
+This code uses JavaScript to loop through all the anchor tags on the page and check if the `href` attribute includes "play.google.com/store/apps". If a link matches this pattern, it adds an onclick event that prevents the default behavior (i.e., following the link) and displays an alert message instead.
+
+You can customize the alert message and the specific pattern to match against based on your requirements.
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Build
+      run: |
+        npm install
+        npx webpack
